@@ -5,7 +5,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+class QuestionManager(models.Manager):
+    def new(self):
+        return self.id
 
+    def popular(self):
+        return self.id
+    
 class Question(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
@@ -13,12 +19,11 @@ class Question(models.Model):
     rating = models.IntegerField(default=0)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     likes = models.ManyToManyField(User, related_name='u')
+    objects = QuestionManager()
     def __unicode__(self):
         return self.title
 
-class QuestionManager(Question):
-    def new(self):
-        return self.id
+
 
 class Answer(models.Model):
     title = models.CharField(max_length=255)
