@@ -16,6 +16,10 @@ class Question(models.Model):
     def __unicode__(self):
         return self.title
 
+class QuestionManager(Question):
+    def new(self):
+        return self.id
+
 class Answer(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
