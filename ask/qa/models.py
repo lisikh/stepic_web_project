@@ -11,7 +11,7 @@ class Question(models.Model):
     text = models.TextField()
     added_at = models.DateTimeField(blank=True)
     rating = models.IntegerField()
-    author = models.TextField()
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     likes = models.TextField()
     def __unicode__(self):
         return self.title
@@ -20,8 +20,6 @@ class Answer(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
     added_at = models.DateTimeField(blank=True)
-    question = models.TextField()
+    question = models.ForeignKey(Question, null=True, on_delete=models.SET_NULL)
     author = models.TextField()
 
-user = User()
-print(user.get_full_name())
