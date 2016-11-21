@@ -3,9 +3,11 @@
     {{ block.super }} – главная
 {% endblock %}
 {% block content %}
-    {% for question in questions %}
-        <p><a href="/question/{{ question.id }}/">{{ question }}</a></p>
-    {% endfor %}
+    <div class="container-fluid">
+        {% for question in questions %}
+            <p><a href="/question/{{ question.id }}/">{{ question }}</a></p>
+        {% endfor %}
+    </div>
 <nav><ul class="pagination">
     {% for p in paginator.page_range %}
         {% if p == page.number %}
