@@ -6,4 +6,16 @@
     {% for question in questions %}
         <p><a href="/question/{{ question.id }}/">{{ question }}</a></p>
     {% endfor %}
+<nav><ul class="pagination">
+    {% for p in paginator.page_range %}
+        {% if p == page.number %}
+            <li class="active">
+        {% else %}
+            <li>
+        {% endif %}
+        <a href="{% url 'main' %}?page={{ p }}">
+        {{ p }}</a>
+        </li>
+    {% endfor %}
+</ul></nav>
 {% endblock %}

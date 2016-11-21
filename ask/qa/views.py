@@ -23,9 +23,10 @@ def paginate(request, qs):
     #paginator.baseurl = 'qa/question/'
     try:
         page = paginator.page(page)
+
     except Exception:
         page = paginator.page(paginator.num_pages)
-    return page
+    return page, paginator
 
 def test(request, **args):
     """
@@ -39,17 +40,19 @@ def test(request, **args):
     return HttpResponse('OK')
 
 def main(request):
-    page = paginate(request, Question.objects.new())
-
+    page, paginator = paginate(request, Question.objects.new())
     return render(request, 'qa/main.html', {
         'questions': page.object_list,
+        'paginator': paginator,
+        'page': page
     })
 
 def popular(request):
-    page = paginate(request, Question.objects.popular())
+    page, paginator = paginate(request, Question.objects.popular())
     return render(request, 'qa/main.html', {
-        #'url': url,
         'questions': page.object_list,
+        'paginator': paginator,
+        'page': page
     })
 
 def question(request, **question):

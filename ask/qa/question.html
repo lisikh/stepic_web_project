@@ -3,9 +3,13 @@
     {{ block.super }} – Вопрос
 {% endblock %}
 {% block content %}
-<h3>{{ title }}:</h3>
-<div>{{ text }}</div>
+<div>
+<h2>{{ title }}:</h2>
+<h3>{{ text }}</h3>
+</div>
+<div class="container-fluid">
 {% for answer in answers %}
     <p>{{ answer }}</p>
 {% endfor %}
+</div>
 {% endblock %}
