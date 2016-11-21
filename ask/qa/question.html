@@ -3,6 +3,9 @@
     {{ block.super }} – Вопрос
 {% endblock %}
 {% block content %}
-<h2>{{ title }}</h2>
-<p>{{ text }}</p>
+<h3>{{ title }}:</h3>
+<div>{{ text }}</div>
+{% for answer in answers %}
+    <p>{{ answer }}</p>
+{% endfor %}
 {% endblock %}

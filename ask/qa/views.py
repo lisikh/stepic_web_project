@@ -55,12 +55,11 @@ def popular(request):
 def question(request, **question):
     id = question['question_id']
     title = Question.objects.get(id=id)
-    text = Question.objects.values_list('text', flat=True)
-    text = text.filter(id=id)
-    text = text[:]
-    print(text)
+    text = Question.objects.values_list('text', flat=True).get(id=id)
+    answers = Answer.objects.filter(question_id=id)
 
     return render(request, 'qa/question.html', {
         'title': title,
-        'text': text
+        'text': text,
+        'answers': answers
     })
