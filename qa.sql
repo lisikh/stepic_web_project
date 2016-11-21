@@ -118,7 +118,7 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +127,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$12000$4RCqYFTKGrkx$F9FuQzeLA0avBAj+cZlR4uuxtVc9x2DOdNIktzy+rR8=','2016-11-20 12:06:24',1,'box','','','',1,1,'2016-11-20 12:06:24'),(2,'test','2016-11-20 12:06:38',0,'test','','','',0,1,'2016-11-20 12:06:38');
+INSERT INTO `auth_user` VALUES (1,'test','2016-11-21 10:34:23',0,'test','','','',0,1,'2016-11-21 10:34:23');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,15 +285,15 @@ CREATE TABLE `qa_answer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `text` longtext NOT NULL,
-  `added_at` datetime NOT NULL,
+  `added_at` datetime DEFAULT NULL,
   `question_id` int(11) DEFAULT NULL,
   `author_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `qa_answer_25110688` (`question_id`),
   KEY `qa_answer_e969df21` (`author_id`),
-  CONSTRAINT `question_id_refs_id_06975074` FOREIGN KEY (`question_id`) REFERENCES `qa_question` (`id`),
-  CONSTRAINT `author_id_refs_id_8b5df575` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `author_id_refs_id_8b5df575` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `question_id_refs_id_06975074` FOREIGN KEY (`question_id`) REFERENCES `qa_question` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,6 +302,7 @@ CREATE TABLE `qa_answer` (
 
 LOCK TABLES `qa_answer` WRITE;
 /*!40000 ALTER TABLE `qa_answer` DISABLE KEYS */;
+INSERT INTO `qa_answer` VALUES (11,'','answer 0',NULL,3141592,1),(12,'','answer 1',NULL,3141592,1),(13,'','answer 2',NULL,3141592,1),(14,'','answer 3',NULL,3141592,1),(15,'','answer 4',NULL,3141592,1),(16,'','answer 5',NULL,3141592,1),(17,'','answer 6',NULL,3141592,1),(18,'','answer 7',NULL,3141592,1),(19,'','answer 8',NULL,3141592,1),(20,'','answer 9',NULL,3141592,1);
 /*!40000 ALTER TABLE `qa_answer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,7 +323,7 @@ CREATE TABLE `qa_question` (
   PRIMARY KEY (`id`),
   KEY `qa_question_e969df21` (`author_id`),
   CONSTRAINT `author_id_refs_id_19215df4` FOREIGN KEY (`author_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3141593 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3141624 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,7 +332,7 @@ CREATE TABLE `qa_question` (
 
 LOCK TABLES `qa_question` WRITE;
 /*!40000 ALTER TABLE `qa_question` DISABLE KEYS */;
-INSERT INTO `qa_question` VALUES (1,'question 0','text 0','2016-11-20 12:06:38',0,2),(2,'question 1','text 1','2016-11-20 12:06:38',1,2),(3,'question 2','text 2','2016-11-20 12:06:38',2,2),(4,'question 3','text 3','2016-11-20 12:06:38',3,2),(5,'question 4','text 4','2016-11-20 12:06:38',4,2),(6,'question 5','text 5','2016-11-20 12:06:38',5,2),(7,'question 6','text 6','2016-11-20 12:06:38',6,2),(8,'question 7','text 7','2016-11-20 12:06:38',7,2),(9,'question 8','text 8','2016-11-20 12:06:38',8,2),(10,'question 9','text 9','2016-11-20 12:06:38',9,2),(11,'question 10','text 10','2016-11-20 12:06:38',10,2),(12,'question 11','text 11','2016-11-20 12:06:38',11,2),(13,'question 12','text 12','2016-11-20 12:06:38',12,2),(14,'question 13','text 13','2016-11-20 12:06:38',13,2),(15,'question 14','text 14','2016-11-20 12:06:38',14,2),(16,'question 15','text 15','2016-11-20 12:06:38',15,2),(17,'question 16','text 16','2016-11-20 12:06:38',16,2),(18,'question 17','text 17','2016-11-20 12:06:38',17,2),(19,'question 18','text 18','2016-11-20 12:06:38',18,2),(20,'question 19','text 19','2016-11-20 12:06:38',19,2),(21,'question 20','text 20','2016-11-20 12:06:38',20,2),(22,'question 21','text 21','2016-11-20 12:06:38',21,2),(23,'question 22','text 22','2016-11-20 12:06:38',22,2),(24,'question 23','text 23','2016-11-20 12:06:38',23,2),(25,'question 24','text 24','2016-11-20 12:06:38',24,2),(26,'question 25','text 25','2016-11-20 12:06:38',25,2),(27,'question 26','text 26','2016-11-20 12:06:38',26,2),(28,'question 27','text 27','2016-11-20 12:06:38',27,2),(29,'question 28','text 28','2016-11-20 12:06:38',28,2),(30,'question 29','text 29','2016-11-20 12:06:38',29,2),(31,'question last','text','2016-11-20 12:06:40',0,2),(3141592,'question about pi','what is the last digit?','2016-11-20 12:06:40',0,2);
+INSERT INTO `qa_question` VALUES (1,'question 0','text 0','2016-11-21 10:34:23',0,1),(2,'question 1','text 1','2016-11-21 10:34:23',1,1),(3,'question 2','text 2','2016-11-21 10:34:23',2,1),(4,'question 3','text 3','2016-11-21 10:34:23',3,1),(5,'question 4','text 4','2016-11-21 10:34:23',4,1),(6,'question 5','text 5','2016-11-21 10:34:23',5,1),(7,'question 6','text 6','2016-11-21 10:34:23',6,1),(8,'question 7','text 7','2016-11-21 10:34:23',7,1),(9,'question 8','text 8','2016-11-21 10:34:23',8,1),(10,'question 9','text 9','2016-11-21 10:34:23',9,1),(11,'question 10','text 10','2016-11-21 10:34:23',10,1),(12,'question 11','text 11','2016-11-21 10:34:23',11,1),(13,'question 12','text 12','2016-11-21 10:34:23',12,1),(14,'question 13','text 13','2016-11-21 10:34:23',13,1),(15,'question 14','text 14','2016-11-21 10:34:23',14,1),(16,'question 15','text 15','2016-11-21 10:34:23',15,1),(17,'question 16','text 16','2016-11-21 10:34:23',16,1),(18,'question 17','text 17','2016-11-21 10:34:23',17,1),(19,'question 18','text 18','2016-11-21 10:34:23',18,1),(20,'question 19','text 19','2016-11-21 10:34:23',19,1),(21,'question 20','text 20','2016-11-21 10:34:23',20,1),(22,'question 21','text 21','2016-11-21 10:34:23',21,1),(23,'question 22','text 22','2016-11-21 10:34:23',22,1),(24,'question 23','text 23','2016-11-21 10:34:23',23,1),(25,'question 24','text 24','2016-11-21 10:34:23',24,1),(26,'question 25','text 25','2016-11-21 10:34:23',25,1),(27,'question 26','text 26','2016-11-21 10:34:23',26,1),(28,'question 27','text 27','2016-11-21 10:34:23',27,1),(29,'question 28','text 28','2016-11-21 10:34:23',28,1),(30,'question 29','text 29','2016-11-21 10:34:23',29,1),(31,'question last','text','2016-11-21 10:34:25',0,1),(3141592,'question about pi','what is the last digit?','2016-11-21 10:34:25',0,1),(3141593,'question 0','text 0','2016-11-21 10:35:35',29,1),(3141594,'question 1','text 1','2016-11-21 10:35:35',30,1),(3141595,'question 2','text 2','2016-11-21 10:35:35',31,1),(3141596,'question 3','text 3','2016-11-21 10:35:35',32,1),(3141597,'question 4','text 4','2016-11-21 10:35:35',33,1),(3141598,'question 5','text 5','2016-11-21 10:35:35',34,1),(3141599,'question 6','text 6','2016-11-21 10:35:35',35,1),(3141600,'question 7','text 7','2016-11-21 10:35:35',36,1),(3141601,'question 8','text 8','2016-11-21 10:35:35',37,1),(3141602,'question 9','text 9','2016-11-21 10:35:35',38,1),(3141603,'question 10','text 10','2016-11-21 10:35:35',39,1),(3141604,'question 11','text 11','2016-11-21 10:35:35',40,1),(3141605,'question 12','text 12','2016-11-21 10:35:35',41,1),(3141606,'question 13','text 13','2016-11-21 10:35:35',42,1),(3141607,'question 14','text 14','2016-11-21 10:35:35',43,1),(3141608,'question 15','text 15','2016-11-21 10:35:35',44,1),(3141609,'question 16','text 16','2016-11-21 10:35:35',45,1),(3141610,'question 17','text 17','2016-11-21 10:35:35',46,1),(3141611,'question 18','text 18','2016-11-21 10:35:35',47,1),(3141612,'question 19','text 19','2016-11-21 10:35:35',48,1),(3141613,'question 20','text 20','2016-11-21 10:35:35',49,1),(3141614,'question 21','text 21','2016-11-21 10:35:35',50,1),(3141615,'question 22','text 22','2016-11-21 10:35:35',51,1),(3141616,'question 23','text 23','2016-11-21 10:35:35',52,1),(3141617,'question 24','text 24','2016-11-21 10:35:35',53,1),(3141618,'question 25','text 25','2016-11-21 10:35:35',54,1),(3141619,'question 26','text 26','2016-11-21 10:35:35',55,1),(3141620,'question 27','text 27','2016-11-21 10:35:35',56,1),(3141621,'question 28','text 28','2016-11-21 10:35:35',57,1),(3141622,'question 29','text 29','2016-11-21 10:35:35',58,1),(3141623,'question last','text','2016-11-21 10:35:37',0,1);
 /*!40000 ALTER TABLE `qa_question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,4 +374,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-20 12:07:57
+-- Dump completed on 2016-11-21 10:42:16
