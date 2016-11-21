@@ -39,13 +39,9 @@ def test(request, **args):
     return HttpResponse('OK')
 
 def main(request):
-   
-
-    print(request.GET.get('page'))
     page = paginate(request, Question.objects.new())
 
     return render(request, 'qa/main.html', {
-        #'url': url,
         'questions': page.object_list,
     })
 
