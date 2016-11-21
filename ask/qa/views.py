@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from models import Question, Answer
 from models import QuestionManager
@@ -54,7 +54,7 @@ def popular(request):
 
 def question(request, **question):
     id = question['question_id']
-    title = Question.objects.get(id=id)
+    title = get_object_or_404(Question, id=id)
     text = Question.objects.values_list('text', flat=True).get(id=id)
     answers = Answer.objects.filter(question_id=id)
 
