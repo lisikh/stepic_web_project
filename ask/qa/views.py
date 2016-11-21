@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from models import Question, Answer
 from models import QuestionManager
-from django.db.models.fields.related import ForeignKey
+#from django.db.models.fields.related import ForeignKey
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -52,4 +52,17 @@ def popular(request):
     return render(request, 'qa/main.html', {
         #'url': url,
         'questions': page.object_list,
+    })
+
+def question(request, **question):
+    id = question['question_id']
+    title = Question.objects.get(id=id)
+    text = Question.objects.values_list('text', flat=True)
+    text = text.filter(id=id)
+    text = text[:]
+    print(text)
+
+    return render(request, 'qa/question.html', {
+        'title': title,
+        'text': text
     })

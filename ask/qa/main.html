@@ -1,11 +1,9 @@
-
-<html>
-<head>
-    <title>Вопросы - и ответы</title>
-</head>
-<body>
-{% for question in questions %}
-<p><a href="/question/{{ question.id }}/">{{ question }}</a></p>
-{% endfor %}
-</body>
-</html>
+{% extends "qa/base.html" %}
+{% block title %}
+    {{ block.super }} – главная
+{% endblock %}
+{% block content %}
+    {% for question in questions %}
+        <p><a href="/question/{{ question.id }}/">{{ question }}</a></p>
+    {% endfor %}
+{% endblock %}
