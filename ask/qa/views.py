@@ -57,7 +57,6 @@ def question(request, **question):
     title = get_object_or_404(Question, id=id)
     text = Question.objects.values_list('text', flat=True).get(id=id)
     answers = Answer.objects.filter(question_id=id)
-
     return render(request, 'qa/question.html', {
         'title': title,
         'text': text,
