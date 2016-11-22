@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from models import Question, Answer
+from forms import AskForm, AnswerForm
 from models import QuestionManager
 #from django.db.models.fields.related import ForeignKey
 from django.core.paginator import Paginator
+from django.views.decorators.http import require_GET, require_POST
 
 # Create your views here.
 
@@ -60,8 +62,31 @@ def question(request, **question):
     title = get_object_or_404(Question, id=id)
     text = Question.objects.values_list('text', flat=True).get(id=id)
     answers = Answer.objects.filter(question_id=id)
+    form = AnswerForm(initial={'question_id': id})
     return render(request, 'qa/question.html', {
         'title': title,
         'text': text,
-        'answers': answers
+        'answers': answers,
+        'form': form
     })
+
+def ask(request):
+    if request.method == "POST":
+        form = AskForm(request.POST)
+        if form.is_valid():
+            question = form.save()
+            url = question.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+    return render(request, 'qa/ask_form.html', {
+        'form': form
+    })
+
+@require_POST
+def answer(request):
+    form = AnswerForm(request.POST)
+    if form.is_valid():
+        answer = form.save()
+        url = answer.get_url()
+        return HttpResponseRedirect(url)

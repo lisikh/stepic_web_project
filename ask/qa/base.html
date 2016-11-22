@@ -7,7 +7,12 @@
 </head>
 <body>
 <h1 class="text-info">Вопросы и ответы</h1>
+<div class="container-fluid">
+    <a href="{% url 'ask' %}"><button type="button" class="btn btn-primary btn-lg">Ask me!</button></a>
+</div>
+<p></p>
 {% block content %}{% endblock %}
+<p></p>
 </body>
 
 <div class="container-fluid">

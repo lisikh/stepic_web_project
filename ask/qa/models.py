@@ -13,7 +13,6 @@ class QuestionManager(models.Manager):
         return self.order_by('-rating')
 
 
-
 class Question(models.Model):
     objects = QuestionManager()
     title = models.CharField(max_length=255)
@@ -24,9 +23,8 @@ class Question(models.Model):
     likes = models.ManyToManyField(User, related_name='u')
     def __unicode__(self):
         return self.title
-    #def get_url(self):
-    #   return reverse('question', kwargs={'id': self.id})
-
+    def get_url(self):
+       return reverse('question', kwargs={'question_id': self.id})
 
 
 class Answer(models.Model):
@@ -37,4 +35,6 @@ class Answer(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     def __unicode__(self):
         return self.text
+    def get_url(self):
+        return reverse('question', kwargs={'question_id': self.question_id})
 

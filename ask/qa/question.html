@@ -7,6 +7,12 @@
 <h2>{{ title }}:</h2>
 <h3>{{ text }}</h3>
 </div>
+<form class="form-horizontal" method="post" action="/answer/">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+<p></p>
 <div class="container-fluid">
 {% for answer in answers %}
     <p>{{ answer }}</p>
