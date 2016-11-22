@@ -3,11 +3,24 @@
     {{ block.super }} – главная
 {% endblock %}
 {% block content %}
+<nav><ul class="pagination">
+    {% for p in paginator.page_range %}
+        {% if p == page.number %}
+            <li class="active">
+        {% else %}
+            <li>
+        {% endif %}
+        <a href="{% url 'main' %}?page={{ p }}">
+        {{ p }}</a>
+        </li>
+    {% endfor %}
+</ul></nav>
     <div class="container-fluid">
-        <hr>
+
         {% for question in questions %}
-            <p><a href="{% url 'question' question.id %}">{{ question }}</a></p>
-        <hr>
+        <ul class="list-group">
+            <li class="list-group-item"><a href="{% url 'question' question.id %}">{{ question }}</a><span class="badge">{{ question.get_answer }}</span></li>
+        </ul>
         {% endfor %}
     </div>
 <nav><ul class="pagination">

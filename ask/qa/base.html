@@ -1,15 +1,27 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/uploads/bootstrap.min.css">
     <title>{% block title %}Q&A{% endblock %}</title>
+    <style>
+        .myclass {background-color: #ffd700;}
+        .header {
+            background-color: grey;
+            color: #ffd700;
+            }
+    </style>
+
     {% block extrahead %}{% endblock %}
 </head>
 <body>
-<h1 align="center" class="text-info">Вопросы и ответы</h1>
+<div class="header">
+    <hr>
+    <h1 align="center">Вопросы и ответы</h1>
+<hr></div>
+
 <div class="container-fluid">
     <a href="{% url 'main' %}"><button type="button" class="btn btn-default btn-lg">New</button></a>
-    <a href="{% url 'popular' %}"><button type="button" class="btn btn-default btn-lg">Popular</button></a>
+    <a href="{% url 'popular' %}"><button type="button" class="btn btn-default btn-lg myclass">Popular</button></a>
     <a href="{% url 'ask' %}"><button type="button" class="btn btn-primary btn-lg active">Ask me!</button></a>
 </div>
 <p></p>

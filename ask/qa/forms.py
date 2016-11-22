@@ -17,5 +17,9 @@ class AnswerForm(forms.Form):
     def clean(self):
         pass
     def save(self):
-        self.cleaned_data['question'] = Question.objects.get(id=self.cleaned_data['question'])
-        return Answer.objects.create(**self.cleaned_data)
+        question = Question.objects.get(id=self.cleaned_data['question'])
+        self.cleaned_data['question'] = question
+        answer = Answer.objects.create(**self.cleaned_data)
+        question.rating += 1
+        question.save()
+        return answer

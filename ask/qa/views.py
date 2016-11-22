@@ -43,8 +43,6 @@ def test(request, **args):
 
 def main(request):
     page, paginator = paginate(request, Question.objects.new())
-    #question = Question.objects.get(id=3141633)
-
     return render(request, 'qa/main.html', {
         'questions': page.object_list,
         'paginator': paginator,

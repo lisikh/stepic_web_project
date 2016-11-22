@@ -21,10 +21,14 @@ class Question(models.Model):
     rating = models.IntegerField(default=0)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     likes = models.ManyToManyField(User, related_name='u')
+
     def __unicode__(self):
         return self.title
     def get_url(self):
-       return reverse('question', kwargs={'question_id': self.id})
+        return reverse('question', kwargs={'question_id': self.id})
+    def get_answer(self):
+        answers = self.answer_set.all().count()
+        return answers
 
 
 class Answer(models.Model):
