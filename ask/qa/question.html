@@ -4,18 +4,22 @@
 {% endblock %}
 {% block content %}
 <div>
-<h2>{{ title }}:</h2>
+<h2>{{ title }}</h2>
 <h3>{{ text }}</h3>
 </div>
 <form class="form-horizontal" method="post" action="/answer/">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Отправить</button>
+    <button type="submit" class="btn btn-primary">Ответить</button>
 </form>
 <p></p>
-<div class="container-fluid">
-{% for answer in answers %}
-    <p>{{ answer }}</p>
-{% endfor %}
-</div>
+
+    <h3>Ответы</h3>
+    {% for answer in answers %}
+    <div class="panel panel-default">
+            <div class="panel-body">{{ answer }}</div>
+    </div>
+    {% endfor %}
+
+
 {% endblock %}
