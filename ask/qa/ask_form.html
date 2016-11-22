@@ -7,7 +7,7 @@
     {% csrf_token %}
 <fieldset>
 {% for field in form %}
-    <div class="control-group
+    <div class="control-group container-fluid
     {% if field.errors %}has-error{% endif %}">
         <label class="control-label">{{ field.label }}</label>
     <div class="controls">{{ field }}</div>

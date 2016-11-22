@@ -3,13 +3,13 @@
     {{ block.super }} – Вопрос
 {% endblock %}
 {% block content %}
-<div>
+<div class="container-fluid">
 <h2>{{ title }}</h2>
 <h3>{{ text }}</h3>
-</div>
+
 <form class="form-horizontal" method="post" action="/answer/">
     {% csrf_token %}
-    {{ form.as_p }}
+     <div class="controls">{{ form.text }}</div>
     <button type="submit" class="btn btn-primary">Ответить</button>
 </form>
 <p></p>
@@ -20,6 +20,6 @@
             <div class="panel-body">{{ answer }}</div>
     </div>
     {% endfor %}
-
+</div>
 
 {% endblock %}

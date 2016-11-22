@@ -6,11 +6,11 @@
     {% block extrahead %}{% endblock %}
 </head>
 <body>
-<h1 class="text-info">Вопросы и ответы</h1>
+<h1 align="center" class="text-info">Вопросы и ответы</h1>
 <div class="container-fluid">
     <a href="{% url 'main' %}"><button type="button" class="btn btn-default btn-lg">New</button></a>
     <a href="{% url 'popular' %}"><button type="button" class="btn btn-default btn-lg">Popular</button></a>
-    <a href="{% url 'ask' %}"><button type="button" class="btn btn-primary btn-lg">Ask me!</button></a>
+    <a href="{% url 'ask' %}"><button type="button" class="btn btn-primary btn-lg active">Ask me!</button></a>
 </div>
 <p></p>
 {% block content %}{% endblock %}
