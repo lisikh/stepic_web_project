@@ -43,6 +43,8 @@ def test(request, **args):
 
 def main(request):
     page, paginator = paginate(request, Question.objects.new())
+    #question = Question.objects.get(id=3141633)
+
     return render(request, 'qa/main.html', {
         'questions': page.object_list,
         'paginator': paginator,
@@ -62,7 +64,8 @@ def question(request, **question):
     title = get_object_or_404(Question, id=id)
     text = Question.objects.values_list('text', flat=True).get(id=id)
     answers = Answer.objects.filter(question_id=id)
-    form = AnswerForm(initial={'question_id': id})
+    form = AnswerForm(initial={'question': id})
+
     return render(request, 'qa/question.html', {
         'title': title,
         'text': text,

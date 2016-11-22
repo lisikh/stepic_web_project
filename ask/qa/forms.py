@@ -13,9 +13,9 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
-    question_id = forms.IntegerField(widget=forms.HiddenInput)
+    question = forms.IntegerField(widget=forms.HiddenInput)
     def clean(self):
         pass
     def save(self):
-        print(self.cleaned_data)
+        self.cleaned_data['question'] = Question.objects.get(id=self.cleaned_data['question'])
         return Answer.objects.create(**self.cleaned_data)
