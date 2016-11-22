@@ -6,7 +6,7 @@ class AskForm(forms.Form):
     title = forms.CharField(max_length=255)
     text = forms.CharField(widget=forms.Textarea)
     def clean(self):
-        pass
+        return self.cleaned_data
     def save(self):
         return Question.objects.create(**self.cleaned_data)
 
