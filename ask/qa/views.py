@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from models import Question, Answer
-from forms import AskForm, AnswerForm
+from forms import AskForm, AnswerForm, NewUserForm, LoginForm
 from models import QuestionManager
 #from django.db.models.fields.related import ForeignKey
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_GET, require_POST
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+import datetime
 
 # Create your views here.
 
@@ -42,6 +45,7 @@ def test(request, **args):
     return HttpResponse('OK')
 
 def main(request):
+    print(request.COOKIES)
     page, paginator = paginate(request, Question.objects.new())
     return render(request, 'qa/main.html', {
         'questions': page.object_list,
@@ -74,6 +78,7 @@ def question(request, **question):
 def ask(request):
     if request.method == "POST":
         form = AskForm(request.POST)
+        form._user = request.user
         if form.is_valid():
             question = form.save()
             url = question.get_url()
@@ -87,7 +92,47 @@ def ask(request):
 @require_POST
 def answer(request):
     form = AnswerForm(request.POST)
+    form._user = request.user
     if form.is_valid():
         answer = form.save()
         url = answer.get_url()
         return HttpResponseRedirect(url)
+
+def my_login(request):
+    print(request.COOKIES)
+    print(request.user)
+    if request.method == "POST":
+
+        username = request.POST['username']
+        password = request.POST['password']
+        print(username, password)
+        user = authenticate(username=username, password=password)
+        print(user)
+        if user is not None:
+            login(request, user)
+            print('SESSION user is', request.session)
+            return HttpResponseRedirect('/')
+
+    form = LoginForm()
+    return render(request, 'qa/login.html', {
+        'form': form
+    })
+
+def signup(request):
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            password = request.POST['password']
+            user = authenticate(username=user, password=password)
+            print(user, password)
+            if user is not None:
+                login(request, user)
+                print('SESSION user is', request.session)
+
+                return HttpResponseRedirect('/')
+    else:
+        form = NewUserForm(initial={'last_login': datetime.datetime.now()})
+    return render(request, 'qa/signup.html', {
+        'form': form
+    })

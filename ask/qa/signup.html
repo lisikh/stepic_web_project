@@ -1,0 +1,27 @@
+{% extends "qa/base.html" %}
+{% block content %}
+
+{% for e in form.non_field_errors %}
+    <div class="alert alert-danger">{{ e }}</div>
+{% endfor %}
+<form class="form-horizontal" method="post" action="/signup/">
+    {% csrf_token %}
+<fieldset>
+{% for field in form %}
+    <div class="control-group container-fluid
+    {% if field.errors %}has-error{% endif %}">
+        {% if not field.is_hidden %}
+            <label class="control-label">{{ field.label }}</label>
+            {% if field.errors %}<label class="control-label">{{ field.errors }}</label>{% endif %}
+        {% endif %}
+    <div class="controls">{{ field }}</div>
+</div>
+{% endfor %}
+</fieldset>
+<br>
+<div class="form-actions container-fluid">
+<button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+</div>
+</form>
+<p></p>
+{% endblock %}

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <link rel="stylesheet" href="/uploads/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <title>{% block title %}Q&A{% endblock %}</title>
     <style>
         .myclass {background-color: #ffd700;}
@@ -20,8 +20,8 @@
 <hr></div>
 
 <div class="container-fluid">
-    <a href="{% url 'main' %}"><button type="button" class="btn btn-default btn-lg">New</button></a>
-    <a href="{% url 'popular' %}"><button type="button" class="btn btn-default btn-lg myclass">Popular</button></a>
+    <a href="{% url 'main' %}"><button type="button" class="btn btn-default btn-lg btn-success">New</button></a>
+    <a href="{% url 'popular' %}"><button type="button" class="btn btn-default btn-lg btn-warning">Popular</button></a>
     <a href="{% url 'ask' %}"><button type="button" class="btn btn-primary btn-lg active">Ask me!</button></a>
 </div>
 <p></p>

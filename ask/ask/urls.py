@@ -16,12 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from qa import views
+#from django.contrib.auth.views import login
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    #url(r'^admin/', admin.site.urls),
     url(r'^$', views.main, name='main'),
-    url(r'^login/', views.test),
-    url(r'^signup/', views.test),
+    url(r'^login/', views.my_login),
+    url(r'^signup/', views.signup),
     url(r'^question/(?P<question_id>[0-9]+)/', views.question, name='question'),
     #url(r'^question/[0-9]+/', test),
     url(r'^ask/', views.ask, name='ask'),
