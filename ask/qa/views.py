@@ -129,8 +129,7 @@ def signup(request):
             if user is not None:
                 login(request, user)
                 print('SESSION user is', request.session)
-
-                return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/')
     else:
         form = NewUserForm(initial={'last_login': datetime.datetime.now()})
     return render(request, 'qa/signup.html', {
