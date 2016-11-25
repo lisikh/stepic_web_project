@@ -35,7 +35,7 @@ class NewUserForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput())
     email = forms.EmailField()
-    last_login = forms.DateTimeField(widget=forms.HiddenInput)
+    #last_login = forms.DateTimeField(widget=forms.HiddenInput)
 
     #def clean_username(self):
      #   username = self.cleaned_data['username']

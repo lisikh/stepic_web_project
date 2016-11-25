@@ -7,8 +7,8 @@ from models import QuestionManager
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
-import datetime
+from django.core.urlresolvers import reverse
+
 
 # Create your views here.
 
@@ -99,8 +99,6 @@ def answer(request):
         return HttpResponseRedirect(url)
 
 def my_login(request):
-    print(request.COOKIES)
-    print(request.user)
     if request.method == "POST":
 
         username = request.POST['username']
@@ -111,9 +109,9 @@ def my_login(request):
         if user is not None:
             login(request, user)
             print('SESSION user is', request.session)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('main'))
 
-    form = LoginForm()
+    form = LoginForm(request.GET)
     return render(request, 'qa/login.html', {
         'form': form
     })
@@ -129,9 +127,9 @@ def signup(request):
             if user is not None:
                 login(request, user)
                 print('SESSION user is', request.session)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('main'))
     else:
-        form = NewUserForm(initial={'last_login': datetime.datetime.now()})
+        form = NewUserForm()
     return render(request, 'qa/signup.html', {
         'form': form
     })
