@@ -2,6 +2,7 @@ from django import forms
 from models import Question, Answer
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import authenticate, login
 
 class AskForm(forms.Form):
     title = forms.CharField(max_length=255)
@@ -37,23 +38,36 @@ class NewUserForm(forms.Form):
     email = forms.EmailField()
     #last_login = forms.DateTimeField(widget=forms.HiddenInput)
 
-    #def clean_username(self):
-     #   username = self.cleaned_data['username']
-    #    try:
-   #         User.objects.get(username=username)
-  #          raise forms.ValidationError(u'User exists')
- #       except:
-#            return username
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        try:
+            User.objects.get(username=username)
+        except:
+            return username
+        raise forms.ValidationError(u'User exists')
 
     def clean(self):
+
         return self.cleaned_data
 
     def save(self):
-        return User.objects.create_user(**self.cleaned_data)
+        user = User.objects.create_user(**self.cleaned_data)
+        password = self.cleaned_data['password']
+        authenticate(username=user, password=password)
+        self.cleaned_data['user'] = user
+        #return self.cleaned_data
+        #return User.objects.create_user(**self.cleaned_data)
 
 
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
     def clean(self):
-        return self.cleaned_data
+        username = self.cleaned_data['username']
+        password = self.cleaned_data['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            self.cleaned_data['user'] = user
+            return self.cleaned_data
+        else:
+            raise forms.ValidationError('User or password not correct')

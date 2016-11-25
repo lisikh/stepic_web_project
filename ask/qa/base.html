@@ -14,6 +14,11 @@
     {% block extrahead %}{% endblock %}
 </head>
 <body>
+{% if user.is_authenticated %}
+    <p class="alert alert-success">Welcome, <b>{{ user.username }}</b>. Thanks for logging in.</p>
+{% else %}
+    <p>Welcome, new user. Please log in.</p>
+{% endif %}
 <div class="header">
     <hr>
     <h1 align="center">Вопросы и ответы</h1>
@@ -23,6 +28,9 @@
     <a href="{% url 'main' %}"><button type="button" class="btn btn-default btn-lg btn-success">New</button></a>
     <a href="{% url 'popular' %}"><button type="button" class="btn btn-default btn-lg btn-warning">Popular</button></a>
     <a href="{% url 'ask' %}"><button type="button" class="btn btn-primary btn-lg active">Ask me!</button></a>
+    <a href="{% url 'login' %}"><button type="button" class="btn btn-primary btn-lg active">Login</button></a>
+    <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg active">Logout</button></a>
+    <a href="{% url 'signup' %}"><button type="button" class="btn btn-primary btn-lg active">Signup</button></a>
 </div>
 <p></p>
 {% block content %}{% endblock %}

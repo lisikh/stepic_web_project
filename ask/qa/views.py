@@ -6,7 +6,9 @@ from models import QuestionManager
 #from django.db.models.fields.related import ForeignKey
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_GET, require_POST
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 
 
@@ -75,6 +77,7 @@ def question(request, **question):
         'form': form
     })
 
+@login_required
 def ask(request):
     if request.method == "POST":
         form = AskForm(request.POST)
@@ -100,36 +103,44 @@ def answer(request):
 
 def my_login(request):
     if request.method == "POST":
-
-        username = request.POST['username']
-        password = request.POST['password']
-        print(username, password)
-        user = authenticate(username=username, password=password)
-        print(user)
-        if user is not None:
-            login(request, user)
-            print('SESSION user is', request.session)
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            login(request, form.cleaned_data['user'])
             return HttpResponseRedirect(reverse('main'))
+        else:
+            return render(request, 'qa/login.html', {
+                'form': form
+            })
+    else:
+        form = LoginForm()
+        return render(request, 'qa/login.html', {
+            'form': form
+        })
 
-    form = LoginForm(request.GET)
-    return render(request, 'qa/login.html', {
-        'form': form
-    })
+def my_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('main'))
 
 def signup(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
+        print(dir(form.errors))
         if form.is_valid():
-            user = form.save()
-            password = request.POST['password']
-            user = authenticate(username=user, password=password)
-            print(user, password)
-            if user is not None:
-                login(request, user)
-                print('SESSION user is', request.session)
+            form.save()
+            login(request, form.cleaned_data['user'])
+            #password = request.POST['password']
+            #user = authenticate(username=user, password=password)
+            #print(user, password)
+            #if user is not None:
+              #  login(request, user)
+             #   print('SESSION user is', request.session)
             return HttpResponseRedirect(reverse('main'))
+        else:
+            return render(request, 'qa/signup.html', {
+                'form': form
+            })
     else:
         form = NewUserForm()
-    return render(request, 'qa/signup.html', {
-        'form': form
-    })
+        return render(request, 'qa/signup.html', {
+            'form': form
+        })
