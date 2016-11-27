@@ -8,19 +8,24 @@
 <hr>
 <p>{{ text }}</p>
 
-<form class="form-horizontal" method="post" action="/answer/">
-    {% csrf_token %}
-     <div class="controls">{{ form }}</div>
-    <button type="submit" class="btn btn-primary">Ответить</button>
-</form>
 <p></p>
 
     <h3>Ответы</h3>
     {% for answer in answers %}
     <div class="panel panel-default">
-            <div class="panel-body">{{ answer }}</div>
+            <div class="panel-body">{{ answer }}
+            <br>added by {{ answer.author }}
+            </div>
+
     </div>
     {% endfor %}
+
+<form class="form-horizontal" method="post" action="/answer/">
+    {% csrf_token %}
+     <div class="controls">{{ form }}</div>
+    <button type="submit" class="btn btn-primary">Ответить</button>
+</form>
+
 </div>
 
 {% endblock %}

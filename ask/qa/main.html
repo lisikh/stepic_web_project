@@ -19,7 +19,8 @@
 
         {% for question in questions %}
         <ul class="list-group">
-            <li class="list-group-item"><a href="{% url 'question' question.id %}">{{ question }}</a><span class="badge">{{ question.get_answer }}</span></li>
+            <h4><li class="list-group-item"><a href="{% url 'question' question.id %}">{{ question }}</a><span class="badge">{{ question.get_answer }}</span></li></h4>
+            <p>added by {{ question.author }}</p>
         </ul>
         {% endfor %}
     </div>

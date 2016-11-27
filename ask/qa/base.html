@@ -9,16 +9,41 @@
             background-color: grey;
             color: #ffd700;
             }
+        .top-panel {
+            background-color: #464339;
+            color: white;
+
+            margin-right: 0px;
+            margin-left: 0px;
+            padding: 0px;
+            width: 100%
+            }
+        .top-left {
+               float: left;
+               background-color: #464339;
+               width: 80%
+              }
+        .top-right {
+                float: right;
+                background-color: #464339;
+                width: 20%
+          }
+
     </style>
 
     {% block extrahead %}{% endblock %}
 </head>
 <body>
-{% if user.is_authenticated %}
-    <p class="alert alert-success">Welcome, <b>{{ user.username }}</b>. Thanks for logging in.</p>
+<div class="top-panel">
+    {% if user.is_authenticated %}
+    <div class="top-left">Welcome, <b>{{ user.username }}</b>. Thanks for logging in.</div>
+    <div align="right" class="top-right"><a href="{% url 'logout' %}">Logout</a>&nbsp;</div>
 {% else %}
-    <p>Welcome, new user. Please log in.</p>
+    <div  class="top-left">Welcome, Guest. Please log in. </div>
+    <div align="right" class="top-right"><a href="{% url 'login' %}">Login</a> <a href="{% url 'signup' %}">Signup</a></div>
 {% endif %}
+</div>
+
 <div class="header">
     <hr>
     <h1 align="center">Вопросы и ответы</h1>
@@ -28,9 +53,6 @@
     <a href="{% url 'main' %}"><button type="button" class="btn btn-default btn-lg btn-success">New</button></a>
     <a href="{% url 'popular' %}"><button type="button" class="btn btn-default btn-lg btn-warning">Popular</button></a>
     <a href="{% url 'ask' %}"><button type="button" class="btn btn-primary btn-lg active">Ask me!</button></a>
-    <a href="{% url 'login' %}"><button type="button" class="btn btn-primary btn-lg active">Login</button></a>
-    <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg active">Logout</button></a>
-    <a href="{% url 'signup' %}"><button type="button" class="btn btn-primary btn-lg active">Signup</button></a>
 </div>
 <p></p>
 {% block content %}{% endblock %}
