@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'qa'
+    'qa',
+    'dashing'
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/lord/dev/stepic_web_project/static'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/home/lord/dev/virtualenv/gunicorn/lib/python2.7/site-packages/dashing/static'
+]
