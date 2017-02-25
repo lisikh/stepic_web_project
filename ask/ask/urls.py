@@ -19,7 +19,7 @@ from qa import views
 #from django.contrib.auth.views import login
 
 urlpatterns = [
-    #url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^$', views.main, name='main'),
     url(r'^login/', views.my_login, name='login'),
     url(r'^logout/', views.my_logout, name='logout'),
