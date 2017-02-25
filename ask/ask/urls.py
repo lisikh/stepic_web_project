@@ -16,10 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from qa import views
+from dashing.utils import router
+from django.conf.urls import include
 #from django.contrib.auth.views import login
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^dashboard/', include(router.urls)),
     url(r'^$', views.main, name='main'),
     url(r'^login/', views.my_login, name='login'),
     url(r'^logout/', views.my_logout, name='logout'),

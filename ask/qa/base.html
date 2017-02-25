@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/public/css/bootstrap.css" %}" >
     <title>{% block title %}Q&A{% endblock %}</title>
     <style>
         .myclass {background-color: #ffd700;}
