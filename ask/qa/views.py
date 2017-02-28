@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
-
+from django.views.generic import View
 
 # Create your views here.
 
@@ -35,6 +35,7 @@ def paginate(request, qs):
         page = paginator.page(paginator.num_pages)
     return page, paginator
 
+
 def test(request, **args):
     """
     print(request.COOKIES)
@@ -46,6 +47,7 @@ def test(request, **args):
     #print(kwargs['pk'])
     return HttpResponse('OK')
 
+
 def main(request):
     print(request.COOKIES)
     page, paginator = paginate(request, Question.objects.new())
@@ -55,6 +57,7 @@ def main(request):
         'page': page
     })
 
+
 def popular(request):
     page, paginator = paginate(request, Question.objects.popular())
     return render(request, 'qa/main.html', {
@@ -62,6 +65,7 @@ def popular(request):
         'paginator': paginator,
         'page': page
     })
+
 
 def question(request, **question):
     id = question['question_id']
@@ -76,6 +80,7 @@ def question(request, **question):
         'answers': answers,
         'form': form
     })
+
 
 @login_required
 def ask(request):
@@ -92,6 +97,7 @@ def ask(request):
         'form': form
     })
 
+
 @require_POST
 def answer(request):
     form = AnswerForm(request.POST)
@@ -100,6 +106,23 @@ def answer(request):
         answer = form.save()
         url = answer.get_url()
         return HttpResponseRedirect(url)
+
+class MyLogin(View):
+    template_name = 'qa/login.html'
+    form_class = LoginForm
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            login(request, form.cleaned_data['user'])
+            return HttpResponseRedirect(reverse('main'))
+
+        return render(request, self.template_name, {'form': form})
+
 
 def my_login(request):
     if request.method == "POST":
@@ -117,9 +140,11 @@ def my_login(request):
             'form': form
         })
 
+# Let's try to use built logout view (see urls)
 def my_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('main'))
+
 
 def signup(request):
     if request.method == "POST":

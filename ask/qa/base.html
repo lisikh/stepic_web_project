@@ -2,20 +2,20 @@
 <html>
 <head>
     {% load static %}
-    <link rel="stylesheet" href="{% static "/public/css/bootstrap.css" %}" >
+    <link rel="stylesheet" href="{% static '/public/css/bootstrap.css' %}" >
     <title>{% block title %}Q&A{% endblock %}</title>
     <style>
         .myclass {background-color: #ffd700;}
         .header {
             background-color: grey;
             color: #ffd700;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
             }
         .top-panel {
             background-color: #464339;
             color: white;
-
-            margin-right: 0px;
-            margin-left: 0px;
             padding: 0px;
             width: 100%
             }
@@ -29,38 +29,41 @@
                 background-color: #464339;
                 width: 20%
           }
-
+        #body {
+            padding-top: 82px
+        }
     </style>
 
     {% block extrahead %}{% endblock %}
 </head>
 <body>
-<div class="top-panel">
-    {% if user.is_authenticated %}
-    <div class="top-left">Welcome, <b>{{ user.username }}</b>. Thanks for logging in.</div>
-    <div align="right" class="top-right"><a href="{% url 'logout' %}">Logout</a>&nbsp;</div>
-{% else %}
-    <div  class="top-left">Welcome, Guest. Please log in. </div>
-    <div align="right" class="top-right"><a href="{% url 'login' %}">Login</a> <a href="{% url 'signup' %}">Signup</a></div>
-{% endif %}
-</div>
-
 <div class="header">
-    <hr>
+    <div class="top-panel">
+        {% if user.is_authenticated %}
+        <div class="top-left">Welcome, <b>{{ user.username }}</b>. Thanks for logging in.</div>
+        <div align="right" class="top-right"><a href="{% url 'logout' %}?next=/">Logout</a>&nbsp;</div>
+    {% else %}
+        <div  class="top-left">Welcome, Guest. Please log in. </div>
+        <div align="right" class="top-right"><a href="{% url 'login' %}?next=/login">Login</a> <a href="{% url 'signup' %}">Signup</a></div>
+    {% endif %}
+    </div>
+
     <h1 align="center">Вопросы и ответы</h1>
-<hr></div>
 
-<div class="container-fluid">
-    <a href="{% url 'main' %}"><button type="button" class="btn btn-default btn-lg btn-success">New</button></a>
-    <a href="{% url 'popular' %}"><button type="button" class="btn btn-default btn-lg btn-warning">Popular</button></a>
-    <a href="{% url 'ask' %}"><button type="button" class="btn btn-primary btn-lg active">Ask me!</button></a>
 </div>
-<p></p>
-{% block content %}{% endblock %}
-<p></p>
+
+<div id="body">
+    <div class="container-fluid">
+        <a href="{% url 'main' %}"><button type="button" class="btn btn-default btn-lg btn-success">New</button></a>
+        <a href="{% url 'popular' %}"><button type="button" class="btn btn-default btn-lg btn-warning">Popular</button></a>
+        <a href="{% url 'ask' %}"><button type="button" class="btn btn-primary btn-lg active">Ask me!</button></a>
+    </div>
+
+    <br>
+    {% block content %}{% endblock %}
+    <br>
+
+</div>
+
 </body>
-
-<div class="container-fluid">
-
-</div>
 </html>

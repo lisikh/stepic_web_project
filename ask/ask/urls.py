@@ -15,17 +15,24 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.views import logout, login
 from qa import views
-from dashing.utils import router
+from django.views.generic import TemplateView
+# from dashing.utils import router
 from django.conf.urls import include
 #from django.contrib.auth.views import login
 
 urlpatterns = [
+    # Show just some template without creating your own view for it!
+    url(r'^about/', TemplateView.as_view(template_name='qa/base.html')),
+
     url(r'^admin/', admin.site.urls),
-    url(r'^dashboard/', include(router.urls)),
+    # url(r'^dashboard/', include(router.urls)),
     url(r'^$', views.main, name='main'),
-    url(r'^login/', views.my_login, name='login'),
-    url(r'^logout/', views.my_logout, name='logout'),
+    url(r'^login/', login, {'template_name': 'qa/login.html'}, name='login'),
+    # url(r'^login/', views.MyLogin.as_view(), name='login'),
+    # url(r'^logout/', views.my_logout, name='logout'),
+    url(r'^logout/', logout, name='logout'),
     url(r'^signup/', views.signup, name='signup'),
     url(r'^question/(?P<question_id>[0-9]+)/', views.question, name='question'),
     #url(r'^question/[0-9]+/', test),
